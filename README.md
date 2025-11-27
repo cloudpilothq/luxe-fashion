@@ -1,34 +1,46 @@
-# LUXE. - Headless E-Commerce Platform
+# LUXE - Headless E-Commerce Platform
 
-LUXE. is a modern, high-performance headless e-commerce application designed for luxury fashion brands. It utilizes a decoupled architecture where React handles the frontend experience, WordPress (WooCommerce) manages the product inventory, and Firebase handles user authentication and customer data.
+LUXE is a modern, high-performance headless e-commerce application designed for luxury fashion brands. It utilizes a decoupled architecture where React handles the frontend experience, WordPress (WooCommerce) manages the product inventory, and Firebase handles user authentication and customer data.
+
+# Important Note Regarding the Live Demo
+
+**Public URL:** https://luxe-fashion-zeta.vercel.app/
+
+**Architecture Notice:** This project uses a Headless Architecture.
+
+-    **The Frontend** (React) is deployed live on Vercel.
+
+-    **The Backend** (WordPress/WooCommerce) is currently configured to run in a Local Environment (localhost).
+
+**For Visitors:** If you visit the live link, the product gallery may appear empty or show connection errors because the frontend cannot access the local backend server running on the developer's machine. To see the full functionality, please clone the repository and run the backend locally (instructions below).
 
 # Architecture Overview     
 
 This project follows a Headless Commerce architecture:
 
--   Frontend (The Head): Built with React (Vite) and Tailwind CSS. It communicates with the backend via APIs.
--   Product Backend (The Body): WordPress + WooCommerce running on a local or cloud server (PHP/MySQL). It provides product data via the REST API.
--   User Backend (The Identity): Firebase Authentication & Firestore. It manages user logins, profiles, and order history records.
+-   **Frontend (The Head):** Built with React (Vite) and Tailwind CSS. It communicates with the backend via APIs.
+-   **Product Backend (The Body):** WordPress + WooCommerce running on a local or cloud server (PHP/MySQL). It provides product data via the REST API.
+-   **User Backend (The Identity):** Firebase Authentication & Firestore. It manages user logins, profiles, and order history records.
 
 ##   Features
 
--   Customer Features
-    -   Modern SPA Interface: Fast, app-like browsing experience without page reloads.
-    -   User Accounts: Registration and login via Firebase Auth.
-    -   My Account Dashboard: Manage profile details, saved addresses, and view order history.
-    -   Shopping Cart: Persistent cart state using LocalStorage.
-    -   Checkout: Integrated order placement system that syncs with WooCommerce.
--   Admin Features
-    -   CMS Dashboard: Manage site content (Hero banners, text, contact info) directly from the admin panel.
-    -   Product Management: Add, edit, and delete products via the WordPress backend.
-    -   Store Settings: Configure payment gateways, currency, and social media links.
-    -   Security: Role-based access control (RBAC) ensuring only admins can access sensitive settings.
+-   **Customer Features**
+    -   **Modern SPA Interface:** Fast, app-like browsing experience without page reloads.
+    -   **User Accounts:** Registration and login via Firebase Auth.
+    -   **My Account Dashboard:** Manage profile details, saved addresses, and view order history.
+    -   **Shopping Cart:** Persistent cart state using LocalStorage.
+    -  ** Checkout:** Integrated order placement system that syncs with WooCommerce.
+-   **Admin Features**
+    -   **CMS Dashboard:** Manage site content (Hero banners, text, contact info) directly from the admin panel.
+    -   **Product Management:** Add, edit, and delete products via the WordPress backend.
+    -   **Store Settings:** Configure payment gateways, currency, and social media links.
+    -   **Security:** Role-based access control (RBAC) ensuring only admins can access sensitive settings.
 
 #   Tech Stack
--   Frontend: React.js, Vite, Tailwind CSS, Lucide React (Icons), React Router DOM, Axios.
--   Backend (CMS): WordPress, WooCommerce.
--   Backend (Auth/DB): Google Firebase (Auth, Firestore).
--   Local Server Environment: XAMPP (Apache/MySQL).
+-   **Frontend:** React.js, Vite, Tailwind CSS, Lucide React (Icons), React Router DOM, Axios.
+-   **Backend (CMS):** WordPress, WooCommerce.
+-   **Backend (Auth/DB):** Google Firebase (Auth, Firestore).
+-   **Local Server Environment:** XAMPP (Apache/MySQL).
 
 #   Prerequisites
 
@@ -43,7 +55,7 @@ Before you begin, ensure you have the following installed:
 
 ## Phase 1: Backend Setup (WordPress)
 
--   Install WordPress:
+-   **Install WordPress:**
     -   Download WordPress and extract it to your XAMPP htdocs folder (e.g., C:\xampp\htdocs\luxe-backend).
     -   Create a database named luxe_db via phpMyAdmin.
     -   Run the WordPress installation wizard in your browser.
@@ -118,20 +130,10 @@ How to become an Admin:
 ## Security Note:
 -   The .env file containing your secret keys is ignored by Git (.gitignore) to prevent leaking credentials. Never commit this file.
 
+
 ## 📂 Project Structure
 
-src/
-├── api/              # API connectors (WooCommerce bridge)
-├── assets/           # Static images and fonts
-├── components/       # Reusable UI components (Navbar, Footer, ProductCard)
-├── context/          # Global State (ShopContext)
-├── layouts/          # Page layouts (AdminLayout)
-├── pages/            # Main views
-│   ├── admin/        # Admin Dashboard pages (Settings, Analytics, etc.)
-│   └── ...           # Public pages (Home, Shop, Account)
-├── firebase.js       # Firebase initialization
-├── App.jsx           # Main Router configuration
-└── main.jsx          # Entry point
+* **Preserved Whitespace:** Inside the backticks, every space and new line is kept, creating that nice tree visual.
 
 ## 🤝 Contribution
 
@@ -143,4 +145,4 @@ src/
 
 ## 📄 License
 
-Distributed under the MIT License. See LICENSE for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.

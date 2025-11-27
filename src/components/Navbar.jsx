@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Search, User, Menu, X, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Search, User, Menu, X, ArrowRight, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useShop } from '../context/ShopContext'; // Import the Global Brain
+import { useShop } from '../context/ShopContext';
 
 const Navbar = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // <--- NEW STATE
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
-    // 1. Get Real Data from Context (No more manual props!)
     const { cart, products } = useShop();
-
-    // 2. Calculate Cart Count dynamically
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-    // 3. Filter Real Products from Firebase
     const filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleProductClick = (productId) => {
-        navigate(`/product/${productId}`); // Go to the specific product URL
+        navigate(`/product/${productId}`);
         setIsSearchOpen(false);
         setSearchQuery('');
     };
@@ -38,8 +35,12 @@ const Navbar = () => {
         <>
             <nav className="sticky top-0 z-50 bg-luxe-beige/90 backdrop-blur-md transition-all duration-300">
                 <div className="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
-                    {/* Mobile Menu Trigger */}
-                    <button className="md:hidden p-2 hover:bg-black/5 rounded-full">
+
+                    {/* Mobile Menu Trigger - NOW ACTIVE */}
+                    <button
+                        className="md:hidden p-2 hover:bg-black/5 rounded-full"
+                        onClick={() => setIsMobileMenuOpen(true)}
+                    >
                         <Menu className="w-6 h-6" />
                     </button>
 
@@ -84,10 +85,54 @@ const Navbar = () => {
                 </div>
             </nav>
 
+            {/* --- MOBILE MENU OVERLAY (NEW) --- */}
+            {isMobileMenuOpen && (
+                <div className="fixed inset-0 z-[60] bg-white animate-fade-in flex flex-col md:hidden">
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-6 h-20 border-b border-gray-100">
+                        <span className="text-xl font-serif font-bold">Menu</span>
+                        <button
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="p-2 hover:bg-gray-100 rounded-full"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+
+                    {/* Links */}
+                    <div className="flex-1 overflow-y-auto py-6 px-6">
+                        <div className="flex flex-col space-y-6">
+                            {menuItems.map((item) => (
+                                <Link
+                                    key={item.label}
+                                    to={item.path}
+                                    onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
+                                    className="flex items-center justify-between text-xl font-medium border-b border-gray-50 pb-4"
+                                >
+                                    {item.label}
+                                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                                </Link>
+                            ))}
+
+                            {/* Mobile specific User Link */}
+                            <Link
+                                to="/login"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="flex items-center gap-3 text-lg font-medium pt-4"
+                            >
+                                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                                    <User className="w-5 h-5" />
+                                </div>
+                                My Account
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* --- FULL SCREEN SEARCH OVERLAY --- */}
             {isSearchOpen && (
                 <div className="fixed inset-0 z-[60] bg-white animate-fade-in flex flex-col">
-                    {/* Close Button Header */}
                     <div className="max-w-[1440px] mx-auto px-6 h-20 w-full flex items-center justify-end">
                         <button
                             onClick={() => setIsSearchOpen(false)}
@@ -97,9 +142,7 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    {/* Search Content */}
                     <div className="max-w-4xl mx-auto px-6 w-full pt-4">
-                        {/* Input Field */}
                         <div className="relative border-b-2 border-luxe-dark pb-4 mb-12">
                             <input
                                 autoFocus
@@ -112,7 +155,6 @@ const Navbar = () => {
                             <ArrowRight className="absolute right-0 bottom-6 w-8 h-8 opacity-50" />
                         </div>
 
-                        {/* Results Grid */}
                         <div className="overflow-y-auto max-h-[60vh] pb-10">
                             {searchQuery ? (
                                 <div className="animate-fade-in-up">
@@ -149,7 +191,6 @@ const Navbar = () => {
                                     )}
                                 </div>
                             ) : (
-                                /* Empty State / Suggestions */
                                 <div>
                                     <p className="text-sm text-gray-400 mb-4 uppercase tracking-widest">Trending Searches</p>
                                     <div className="flex flex-wrap gap-3">
